@@ -1,0 +1,10 @@
+# Node.Js
+node_modules
+coverage
+dist
+
+# misc
+*.log
+logs
+temp
+tmp
