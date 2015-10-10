@@ -1,5 +1,5 @@
 {
-  "name": "schedule-api",
+  "name": "api-nfl-schedule",
   "version": "1.0.0",
   "description": "An espn NFL schedule scraper",
   "main": "./app/app.js",
