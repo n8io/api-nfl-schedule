@@ -2,6 +2,12 @@
   "name": "api-nfl-schedule",
   "version": "1.0.0",
   "description": "An espn NFL schedule scraper",
+  "engines": {
+    "node": ">=4.1.1"
+  },
+  "repository": {
+    "git": "git@github.com:n8io/api-nfl-schedule.git"
+  },
   "main": "./app/app.js",
   "scripts": {
     "start": "node ./app/app.js",

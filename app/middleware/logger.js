@@ -1,5 +1,7 @@
 var logger = require('morgan');
 
 module.exports = function(app) {
-  app.use(logger('dev'));
+  var logFormat = process.env.LOGGER_LOGFMT || 'tiny';
+
+  app.use(logger(logFormat));
 };
