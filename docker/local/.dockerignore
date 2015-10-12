@@ -11,6 +11,7 @@ npm-debug.log
 .gitignore
 
 # docker
+docker
 app.env
 app.*.env
 docker-compose.yml

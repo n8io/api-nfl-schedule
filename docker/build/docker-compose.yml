@@ -1,10 +1,10 @@
 web:
-  build: .
-  container_name: api-nfl-schedule-local
+  image: api-nfl-schedule:latest
+  container_name: api-nfl-schedule-build
   ports:
-    - 4101:4101
+    - 4102:4102
   environment:
-    - PORT=4101
+    - PORT=4102
     - REDIS_HOST=redis
     - REDIS_PORT=6379
     - ADMIN_KEY=123
