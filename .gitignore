@@ -4,6 +4,11 @@ coverage
 dist
 .git.json
 
+# Docker
+.dockerignore
+docker-compose.yml
+Dockerfile
+
 # misc
 *.log
 logs
