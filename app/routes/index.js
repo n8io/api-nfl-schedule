@@ -6,6 +6,8 @@ module.exports = function(app, dir) {
       return;
     }
 
-    require(path.join(__dirname, file))(app, path);
+    var filePath  = path.join(__dirname, file.split('.js').join(''));
+
+    require(filePath)(app, path);
   });
 };

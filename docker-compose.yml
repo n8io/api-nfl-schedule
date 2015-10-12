@@ -1,9 +1,0 @@
-web:
-  build: .
-  container_name: api-nfl-schedule
-  ports:
-    - 4101:4101
-  environment:
-    - PORT=4101
-  volumes:
-    - ./app:/app

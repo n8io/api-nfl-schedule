@@ -1,10 +1,12 @@
 # Node.js
-dist
 test
 tests
 coverage
-node_modules
-npm-debug.log
+gulp
+gulpfile.js
+
+# Docker
+docker
 
 # git
 .git
@@ -22,3 +24,4 @@ logs
 LICENSE
 VERSION
 README.md
+.*rc

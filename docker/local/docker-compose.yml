@@ -1,0 +1,19 @@
+web:
+  build: .
+  container_name: api-nfl-schedule-local
+  ports:
+    - 4101:4101
+  environment:
+    - PORT=4101
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - ADMIN_KEY=123
+  volumes:
+    - ./app:/src/app
+  links:
+    - redis
+redis:
+  image: redis
+  container_name: redis
+  ports:
+    - 6379:6379

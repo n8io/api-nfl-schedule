@@ -19,7 +19,7 @@ var cfg = {
   test: {
     src: [path.join(__dirname, '../test/**/*.spec.js')],
     options: {
-      reporter: 'spec'
+      reporter: 'nyan'
     }
   },
   nodemon: {
