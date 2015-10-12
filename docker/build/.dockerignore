@@ -1,0 +1,27 @@
+# Node.js
+test
+tests
+coverage
+gulp
+gulpfile.js
+
+# Docker
+docker
+
+# git
+.git
+.gitignore
+
+# docker
+app.env
+app.*.env
+docker-compose.yml
+
+# misc
+logs
+*.log
+.DS_Store
+LICENSE
+VERSION
+README.md
+.*rc

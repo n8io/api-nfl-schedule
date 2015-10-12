@@ -5,5 +5,14 @@ web:
     - 4101:4101
   environment:
     - PORT=4101
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
   volumes:
-    - ./app:/app
+    - ./app:/src/app
+  links:
+    - redis
+redis:
+  image: redis
+  container_name: redis
+  ports:
+    - 6379:6379
