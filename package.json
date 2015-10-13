@@ -11,7 +11,7 @@
   "main": "./app/app.js",
   "scripts": {
     "start": "node ./app/app.js",
-    "test": "npm run test-unit",
+    "test": "npm run tests",
     "tests": "gulp test",
     "test-unit": "gulp test-unit",
     "test-integration": "gulp test-integration",
