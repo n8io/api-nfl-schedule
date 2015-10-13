@@ -1,6 +1,6 @@
 # Defines the base image for your container. E.g. node, node:0.12.7, node:0.10.38
-FROM node:4.1.2
-MAINTAINER Nate Clark <nate.clark@ignitionone.com>
+FROM node:latest
+MAINTAINER Nate Clark <n8@n8io.com>
 
 # Create a directory to hold your application
 RUN mkdir /src
