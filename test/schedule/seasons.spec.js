@@ -19,9 +19,13 @@ var _ = require('lodash');
 
   var uris = {
     seasons: url.format(_.assign(uri, {pathname: apiVersion + '/seasons'})),
+    schedules: url.format(_.assign(uri, {pathname: apiVersion + '/schedules'})),
     seasonsId: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/404'})),
-    seasonsIdSchedule: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1'})),
-    seasonsIdScheduleWeek: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1/weeks/1'}))
+    seasonsIdSchedule: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules'})),
+    preseasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1/weeks'})),
+    regularSeasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/2/weeks'})),
+    postseasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/3/weeks'})),
+    seasonsIdScheduleIdWeekId: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1/weeks/1'}))
   };
 
   describe(apiVersion + '/seasons', function() {
@@ -36,12 +40,12 @@ var _ = require('lodash');
         });
       });
 
-      it('should return an array with length > 0', function(done) {
+      it('should return an array with length > 12', function(done) {
         superagent.get(uris.seasons).end(function(err, res) {
           assert.ifError(err);
           assert.equal(res.status, status.OK);
           var result = JSON.parse(res.text);
-          expect(result).to.have.length.above(0);
+          expect(result).to.have.length.above(12);
           done();
         });
       });
@@ -60,7 +64,31 @@ var _ = require('lodash');
     });
   });
 
-  describe(apiVersion + '/seasons/:year', function() {
+  describe(apiVersion + '/schedules', function() {
+    describe('GET', function(done) {
+      it('should return an array', function(done) {
+        superagent.get(uris.schedules).end(function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          assert.isArray(result);
+          done();
+        });
+      });
+
+      it('should return an array with length 3', function(done) {
+        superagent.get(uris.schedules).end(function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          expect(result).to.have.length(3);
+          done();
+        });
+      });
+    });
+  });
+
+  describe(apiVersion + '/seasons/:season', function() {
     describe('GET', function(done) {
       it('should return a 404 Not Found', function(done) {
         superagent.get(uris.seasonsId).end(function(err, res) {
@@ -71,11 +99,60 @@ var _ = require('lodash');
     });
   });
 
-  describe(apiVersion + '/seasons/:year/:schedule', function() {
+  describe(apiVersion + '/seasons/:season/schedules', function() {
     describe('GET', function(done) {
-      it('should return a 404 Not Found', function(done) {
+      it('should return an array', function(done) {
         superagent.get(uris.seasonsIdSchedule).end(function(err, res) {
-          assert.equal(res.status, status.NOT_FOUND);
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          assert.isArray(result);
+          expect(result).to.have.length(3);
+          done();
+        });
+      });
+    });
+  });
+
+  describe(apiVersion + '/seasons/:season/schedules/1/weeks', function() {
+    describe('GET', function(done) {
+      it('should return an array with length 5', function(done) {
+        superagent.get(uris.preseasonWeeks).end(function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          assert.isArray(result);
+          expect(result).to.have.length(5);
+          done();
+        });
+      });
+    });
+  });
+
+  describe(apiVersion + '/seasons/:season/schedules/2/weeks', function() {
+    describe('GET', function(done) {
+      it('should return an array with length 5', function(done) {
+        superagent.get(uris.regularSeasonWeeks).end(function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          assert.isArray(result);
+          expect(result).to.have.length(17);
+          done();
+        });
+      });
+    });
+  });
+
+  describe(apiVersion + '/seasons/:season/schedules/3/weeks', function() {
+    describe('GET', function(done) {
+      it('should return an array with length 5', function(done) {
+        superagent.get(uris.postseasonWeeks).end(function(err, res) {
+          assert.ifError(err);
+          assert.equal(res.status, status.OK);
+          var result = JSON.parse(res.text);
+          assert.isArray(result);
+          expect(result).to.have.length(5);
           done();
         });
       });
