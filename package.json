@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An espn NFL schedule scraping api.",
   "engines": {
-    "node": ">=4.1.1"
+    "node": ">=4.2"
   },
   "repository": {
     "git": "git@github.com:n8io/api-nfl-schedule.git"
@@ -11,9 +11,13 @@
   "main": "./app/app.js",
   "scripts": {
     "start": "node ./app/app.js",
-    "test": "gulp test",
+    "test": "npm run test-unit",
+    "tests": "gulp test",
+    "test-unit": "gulp test-unit",
+    "test-integration": "gulp test-integration",
     "dev": "gulp | bunyan",
     "gulp": "gulp",
+    "nodemon": "nodemon $npm_package_main",
     "clean": "rm -rf ./node_modules/ ./dist/ ./.git.json ./coverage ./*.log 2 ./Dockerfile ./.dockerignore > /dev/null",
     "docker-build": "cp -rf ./docker/build/ ./ && docker build --tag api-nfl-schedule:latest . && docker-compose stop && docker-compose rm -f && docker-compose up -d",
     "docker-local": "cp -rf ./docker/local/ ./ && docker-compose stop && docker-compose rm -f && docker-compose up -d"

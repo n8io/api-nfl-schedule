@@ -18,10 +18,10 @@ var _ = require('lodash');
   };
 
   var uris = {
-    seasonsIdScheduleWeek: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/2/weeks/5'}))
+    seasonsIdScheduleWeek: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/2/weeks/4/matchups'}))
   };
 
-  describe(apiVersion + '/seasons/:year/:schedule/:week', function() {
+  describe(apiVersion + '/seasons/:season/schedules/:schedule/weeks/:week/matchups', function() {
     describe('GET', function(done) {
       it('should return an object', function(done) {
         superagent.get(uris.seasonsIdScheduleWeek).end(function(err, res) {

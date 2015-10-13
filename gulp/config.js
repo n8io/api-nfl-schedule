@@ -17,9 +17,17 @@ var validEnvironments = {
 var cfg = {
   env: validEnvironments[process.env.NODE_ENV || ''] || validEnvironments.local,
   test: {
-    src: [path.join(__dirname, '../test/**/*.spec.js')],
-    options: {
-      reporter: 'nyan'
+    unit: {
+      src: [path.join(__dirname, '../test/unit/**/*.spec.js')],
+      options: {
+        reporter: 'spec'
+      }
+    },
+    integration: {
+      src: [path.join(__dirname, '../test/integration/**/*.spec.js')],
+      options: {
+        reporter: 'spec'
+      }
     }
   },
   nodemon: {
