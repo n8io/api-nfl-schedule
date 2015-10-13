@@ -10,4 +10,6 @@
 
 
 ## Testing
-1. `HOST=$(docker-machine ip default) npm test`
+1. `HOST=$(docker-machine ip default) npm run test-unit` # To run unit tests
+2. `HOST=$(docker-machine ip default) npm run test-integration` # To run integration tests
+3. `HOST=$(docker-machine ip default) npm run tests` # To run all tests
