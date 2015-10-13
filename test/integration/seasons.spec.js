@@ -92,6 +92,7 @@ var _ = require('lodash');
     describe('GET', function(done) {
       it('should return a 404 Not Found', function(done) {
         superagent.get(uris.seasonsId).end(function(err, res) {
+          assert.ifError(err);
           assert.equal(res.status, status.NOT_FOUND);
           done();
         });
