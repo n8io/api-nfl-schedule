@@ -6,7 +6,8 @@
     "node": ">=4.2.1"
   },
   "repository": {
-    "git": "git@github.com:n8io/api-nfl-schedule.git"
+    "type": "git",
+    "url": "git@github.com:n8io/api-nfl-schedule.git"
   },
   "main": "./app/app.js",
   "scripts": {
@@ -17,10 +18,10 @@
     "gulp": "gulp",
     "nodemon": "nodemon $npm_package_main",
     "clean": "rm -rf ./node_modules/ ./dist/ ./.git.json ./coverage ./*.log 2 ./Dockerfile ./.dockerignore > /dev/null",
-    "docker-build": "cp -rf ./docker/build/ ./ && docker build --tag api-nfl-schedule:latest . && docker-compose stop && docker-compose rm -f && docker-compose up -d",
-    "docker-local": "cp -rf ./docker/local/ ./ && docker-compose stop && docker-compose rm -f && docker-compose up -d"
+    "docker-build": "cp -rf ./docker/build/ ./ && node docker/build.js && docker build --tag api-nfl-schedule:latest . && docker-compose stop && docker-compose rm -f && docker-compose up -d",
+    "docker-local": "cp -rf ./docker/local/ ./ && node docker/build.js && docker-compose stop && docker-compose rm -f && docker-compose up -d"
   },
-  "author": "Nate Clark",
+  "author": "Nate Clark <n8@n8io.com>",
   "license": "MIT",
   "dependencies": {
     "async": "^1.4.2",
@@ -37,6 +38,7 @@
     "nconf": "^0.8.2",
     "request": "^2.64.0",
     "require-dir": "^0.3.0",
+    "semver-regex": "^1.0.0",
     "serve-favicon": "^2.3.0",
     "sort-json": "^1.1.1"
   },
@@ -51,6 +53,8 @@
     "gulp-sequence": "^0.4.1",
     "http-status": "^0.2.0",
     "mocha": "^2.3.3",
+    "replacestream": "^4.0.0",
+    "semver": "^5.0.3",
     "shelljs": "^0.5.3",
     "superagent": "^1.4.0",
     "supertest": "^1.1.0"
