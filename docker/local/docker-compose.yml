@@ -8,6 +8,9 @@ web:
     - REDIS_HOST=redis
     - REDIS_PORT=6379
     - ADMIN_KEY=123
+    - EXPRESS_LOG_FORMAT=dev
+    - BUNYAN_LOGLEVEL=info
+    - NPM_CONFIG_LOGLEVEL=warn
   volumes:
     - ./app:/src/app
   links:
