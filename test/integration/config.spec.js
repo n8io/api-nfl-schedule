@@ -33,7 +33,8 @@ var _ = require('lodash');
           .end(function(err, res) {
             assert.ifError(err);
             done();
-          });
+          })
+          ;
       });
 
       it('should return an object with a valid ADMIN_KEY', function(done) {
@@ -43,7 +44,8 @@ var _ = require('lodash');
           .end(function(err, res) {
             assert.ifError(err);
             done();
-          });
+          })
+          ;
       });
     });
   });
