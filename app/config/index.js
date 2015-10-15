@@ -20,12 +20,22 @@ var validEnvironments = {
 
 var envSettings = parseEnvironmentVars(envKeys);
 
+var version = '0.0.0';
+
 cfg.use('memory');
 
 cfg.env(envSettings.env);
 
 if(fs.existsSync(packageJson)) {
   cfg.set('pkgJson', JSON.parse(fs.readFileSync(packageJson, 'utf-8')));
+
+  if(!cfg.get('npm_package_version')) {
+    cfg.set('npm_package_version', cfg.get('pkgJson:version'));
+  }
+
+  if(!cfg.get('npm_package_name')) {
+    cfg.set('npm_package_name', cfg.get('pkgJson:name'));
+  }
 }
 
 if(fs.existsSync(commitFile)) {

@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var assert = require('chai').assert;
 
 var url = require('url');
-var superagent = require('superagent');
+var supertest = require('supertest');
 var status = require('http-status');
 var _ = require('lodash');
 
@@ -11,151 +11,226 @@ var _ = require('lodash');
 
   var apiVersion = '/' + (process.env.API_VERSION || 'v1');
 
-  var uri = {
-    protocol: (process.env.PROTOCOL || 'http'),
-    hostname: (process.env.HOST || 'localhost'),
-    port: (process.env.PORT || 4101)
-  };
-
   var uris = {
-    seasons: url.format(_.assign(uri, {pathname: apiVersion + '/seasons'})),
-    schedules: url.format(_.assign(uri, {pathname: apiVersion + '/schedules'})),
-    seasonsId: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/404'})),
-    seasonsIdSchedule: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules'})),
-    preseasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1/weeks'})),
-    regularSeasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/2/weeks'})),
-    postseasonWeeks: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/3/weeks'})),
-    seasonsIdScheduleIdWeekId: url.format(_.assign(uri, {pathname: apiVersion + '/seasons/2015/schedules/1/weeks/1'}))
+    seasons: apiVersion + '/seasons',
+    schedules: apiVersion + '/schedules',
+    seasonSchedules: apiVersion + '/seasons/2015/schedules',
+    preseasonWeeks: apiVersion + '/seasons/2015/schedules/1/weeks',
+    regularSeasonWeeks: apiVersion + '/seasons/2015/schedules/2/weeks',
+    postseasonWeeks: apiVersion + '/seasons/2015/schedules/3/weeks'
   };
 
-  describe(apiVersion + '/seasons', function() {
+  describe(uris.seasons, function() {
     describe('GET', function(done) {
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
+
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array', function(done) {
-        superagent.get(uris.seasons).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          done();
-        });
+        supertest(server)
+          .get(uris.seasons)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            done();
+          })
+          ;
       });
 
       it('should return an array with length > 12', function(done) {
-        superagent.get(uris.seasons).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          expect(result).to.have.length.above(12);
-          done();
-        });
+        supertest(server)
+          .get(uris.seasons)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length.above(12);
+            done();
+          });
       });
 
       it('should return an array of integers', function(done) {
-        superagent.get(uris.seasons).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          _.each(result, function(item) {
-            assert.isNumber(item);
+        supertest(server)
+          .get(uris.seasons)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            _.each(result, function(item) {
+              assert.isNumber(item);
+            });
+            done();
           });
-          done();
-        });
       });
     });
   });
 
-  describe(apiVersion + '/schedules', function() {
+  describe(uris.schedules, function() {
     describe('GET', function(done) {
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
+
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array', function(done) {
-        superagent.get(uris.schedules).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          done();
-        });
+        supertest(server)
+          .get(uris.schedules)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            done();
+          });
       });
 
       it('should return an array with length 3', function(done) {
-        superagent.get(uris.schedules).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          expect(result).to.have.length(3);
-          done();
-        });
+        supertest(server)
+          .get(uris.schedules)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length(3);
+            done();
+          });
       });
     });
   });
 
-  describe(apiVersion + '/seasons/:season', function() {
+  describe(uris.seasonSchedules, function() {
     describe('GET', function(done) {
-      it('should return a 404 Not Found', function(done) {
-        superagent.get(uris.seasonsId).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.NOT_FOUND);
-          done();
-        });
-      });
-    });
-  });
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
 
-  describe(apiVersion + '/seasons/:season/schedules', function() {
-    describe('GET', function(done) {
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array', function(done) {
-        superagent.get(uris.seasonsIdSchedule).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          expect(result).to.have.length(3);
-          done();
-        });
+        supertest(server)
+          .get(uris.seasonSchedules)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            done();
+          });
+      });
+
+      it('should return an array with length 3', function(done) {
+        supertest(server)
+          .get(uris.seasonSchedules)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length(3);
+            done();
+          });
       });
     });
   });
 
-  describe(apiVersion + '/seasons/:season/schedules/1/weeks', function() {
+  describe(uris.preseasonWeeks, function() {
     describe('GET', function(done) {
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
+
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array with length 5', function(done) {
-        superagent.get(uris.preseasonWeeks).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          expect(result).to.have.length(5);
-          done();
-        });
+        supertest(server)
+          .get(uris.preseasonWeeks)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length(5);
+            done();
+          })
+          ;
       });
     });
   });
 
-  describe(apiVersion + '/seasons/:season/schedules/2/weeks', function() {
+  describe(uris.regularSeasonWeeks, function() {
     describe('GET', function(done) {
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
+
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array with length 5', function(done) {
-        superagent.get(uris.regularSeasonWeeks).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          expect(result).to.have.length(17);
-          done();
-        });
+        supertest(server)
+          .get(uris.regularSeasonWeeks)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length(17);
+            done();
+          });
       });
     });
   });
 
-  describe(apiVersion + '/seasons/:season/schedules/3/weeks', function() {
+  describe(uris.postseasonWeeks, function() {
     describe('GET', function(done) {
+      var server;
+      beforeEach(function(done) {
+        process.env.BUNYAN_LOGLEVEL = 'OFF';
+        process.env.EXPRESS_LOG_FORMAT = 'OFF';
+
+        // Start api server
+        server = require('../../app/app');
+        done();
+      });
+
       it('should return an array with length 5', function(done) {
-        superagent.get(uris.postseasonWeeks).end(function(err, res) {
-          assert.ifError(err);
-          assert.equal(res.status, status.OK);
-          var result = JSON.parse(res.text);
-          assert.isArray(result);
-          expect(result).to.have.length(5);
-          done();
-        });
+        supertest(server)
+          .get(uris.postseasonWeeks)
+          .end(function(err, res) {
+            assert.ifError(err);
+            assert.equal(res.status, status.OK);
+            var result = JSON.parse(res.text);
+            assert.isArray(result);
+            expect(result).to.have.length(5);
+            done();
+          });
       });
     });
   });

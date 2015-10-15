@@ -21,3 +21,5 @@ server = app.listen(port, listeningIp, function() {
     process.version
   );
 });
+
+module.exports = server;
