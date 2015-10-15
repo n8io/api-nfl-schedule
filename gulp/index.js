@@ -8,5 +8,4 @@ module.exports = function(gulp, plugins) {
 
   // Expose custom multi-tasks
   gulp.task('default', ['nodemon']);
-  gulp.task('test', ['test-unit', 'test-integration']);
 };

@@ -13,6 +13,7 @@ module.exports = function(app) {
       return res
         .status(400)
         .json({
+          code: 4444,
           message: 'Invalid season parameter [' + season + ']. Season must be between 2002 and ' + utils.getCurrentSeason()
         })
         ;
@@ -30,6 +31,7 @@ module.exports = function(app) {
       return res
         .status(400)
         .json({
+          code: 3333,
           message: 'Invalid schedule parameter [' + schedule + ']. Schedule must be 1=PRESEASON, 2=REGULAR, or 3=POST'
         })
         ;
@@ -47,6 +49,7 @@ module.exports = function(app) {
       return res
         .status(400)
         .json({
+          code: 2222,
           message: 'Invalid week parameter [ ' + week + ' ]. ' + 'Week must be valid for the schedule.'
         })
         ;
