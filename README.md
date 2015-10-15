@@ -1,8 +1,8 @@
 # api-nfl-schedule
 
 [![Codeship](https://img.shields.io/codeship/83dc5250-537f-0133-864a-76919038d6b2/develop.svg)]()
-[![node](https://img.shields.io/badge/node-%3E%3D4.1.2-lightgrey.svg)]()
-[![npm](https://img.shields.io/badge/npm-%3E%3D2.14.4-lightgrey.svg)]()
+[![node](https://img.shields.io/badge/node-%3E%3D4.2.1-lightgrey.svg)]()
+[![npm](https://img.shields.io/badge/npm-%3E%3D2.14.7-lightgrey.svg)]()
 [![dependencies](https://img.shields.io/david/n8io/api-nfl-schedule.svg)]()
 [![devDependencies](https://img.shields.io/david/dev/n8io/api-nfl-schedule.svg)]()
 

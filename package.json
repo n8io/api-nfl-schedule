@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An espn NFL schedule scraping api.",
   "engines": {
-    "node": ">=4.2"
+    "node": ">=4.2.1"
   },
   "repository": {
     "git": "git@github.com:n8io/api-nfl-schedule.git"
