@@ -76,9 +76,15 @@ function get(req, res, next) {
         var matchup = {};
         var $tr = $(tr);
 
+        if($tr.hasClass('has-results') === false) {
+          return;
+        }
+
         var $tdAwayTeam = $($tr.find('td').eq(0));
         var $tdHomeTeam = $($tr.find('td').eq(1));
         var $tdGameId = $($tr.find('td').eq(2));
+
+        var scores = parseScore($tdGameId);
 
         if(isFuture) {
           if($item.find('td.live').length) {
@@ -92,6 +98,18 @@ function get(req, res, next) {
         matchup.date = currentDate;
         matchup.awayTeam = parseTeamInfo($tdAwayTeam);
         matchup.homeTeam = parseTeamInfo($tdHomeTeam);
+
+        if(scores.length > 1) {
+          if($tdGameId.html().indexOf(matchup.homeTeam.abbr) < $tdGameId.html().indexOf(matchup.awayTeam.abbr)) {
+            matchup.homeTeam.score = scores[0];
+            matchup.awayTeam.score = scores[1];
+          }
+          else {
+            matchup.homeTeam.score = scores[1];
+            matchup.awayTeam.score = scores[0];
+          }
+        }
+
         matchup.id = parseGameId($tdGameId);
         matchup.status = status;
 
@@ -115,6 +133,21 @@ function get(req, res, next) {
 
     return res.json(data);
   });
+}
+
+function parseScore($td) {
+  var rx = /^ *[A-Z]{2,3} (\d+), [A-Z]{2,3} (\d+).*$/;
+  var $a = $td.find('a');
+  var text = $a.text();
+  var matches = text.match(rx) || [];
+
+  console.log(JSON.stringify($td.html(), null, 2));
+
+  if(matches.length) {
+    return [parseInt(matches[1], 0), parseInt(matches[2], 0)];
+  }
+
+  return matches;
 }
 
 function parseTeamInfo($td) {

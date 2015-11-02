@@ -7,7 +7,7 @@ var buildType = (process.env.BUILD_TYPE || '').toLowerCase() === 'build' ? 'buil
 var dockerFileTemplatePath = path.join(__dirname, buildType, 'Dockerfile');
 var destPath = path.join(__dirname, '..', 'Dockerfile');
 
-var pkgJson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json')));
+var pkgJson = require('../package.json');
 
 var nodeVersion = semverRegex().exec(pkgJson.engines.node)[0] || 'latest';
 

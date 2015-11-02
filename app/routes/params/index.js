@@ -92,7 +92,7 @@ module.exports = function(app) {
       case 2:
         return num <= 17;
       case 3:
-        return num <= 4;
+        return num <= 5;
       default:
         return false;
     }
